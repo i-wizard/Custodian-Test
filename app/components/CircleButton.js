@@ -1,13 +1,8 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  Text,
-  View,
   TouchableOpacity,
-  Platform,
-  Animated,
-  FlatList,
+
 } from 'react-native';
 
 import Feather from 'react-native-vector-icons/Feather';
@@ -34,9 +29,8 @@ const styles = StyleSheet.create({
       height: 4,
     },
     shadowOpacity: 0.8,
-    shadowRadius: 12,
+    shadowRadius: 8,
     elevation: 15,
-    // zIndex: -10,
   },
 });
 export default CircleButton;

@@ -79,3 +79,31 @@ const colors = [
         message: messages[Math.floor(Math.random() * messages.length)],
         key: index,
       }));
+export  const City = [
+  {   id:1,
+      location:"Nigeria",
+      abbr:"NGR",
+      airport:"Murtala Mohammed Airport"
+  },
+  {
+      id:2,
+      location:"United States",
+      abbr:"USA",
+      airport:"JKF Airport"
+  },
+  {   id:5,
+      location:"England",
+      abbr:"ENG",
+      airport:"Heathrow Airport"
+  },
+  {   id:3,
+      location:"Dubai",
+      abbr:"DUB",
+      airport:"Dubai Airport"
+  },
+  {   id:4,
+      location:"Tokyo",
+      abbr:"TKY",
+      airport:"Tokyo Airport"
+  },
+]

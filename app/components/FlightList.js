@@ -1,32 +1,33 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
   Text,
-  Image,
-  TouchableOpacity,
-  TextInput,
   Platform
 } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
 
 import {AppColor, MyButton} from '../utils/helper';
 
-const FlightList = props => {
+const FlightList = ({item}) => {
+  const bookFlight = () => {
+    alert("Flight Booked")
+  }
   const ClosedCard = () => {
     return (
       <View  style={[styles.card]}>
         <View style={styles.firstLayer}>
-          <Text style={styles.text}>Tokyo Airport</Text>
-          <Text style={{...styles.text, fontWeight: 'bold'}}>
-            British Airways
+          <Text style={styles.text}> {item.itineraries[0].segments[0].departure.iataCode} Airport</Text>
+          <Text style={styles.text}>
+          {item.itineraries[0].segments[1].departure.iataCode} Airport
           </Text>
         </View>
         <View style={styles.tripContainer}>
-          <Text>Tok</Text>
+          <Text>{item.itineraries[0].segments[0].departure.iataCode}</Text>
           <View style={styles.planeContainer}>
             <View style={styles.horizontalLine}></View>
             <Ionicons
@@ -37,27 +38,27 @@ const FlightList = props => {
             />
             <View style={styles.horizontalLine}></View>
           </View>
-          <Text>NGR</Text>
+          <Text>{item.itineraries[0].segments[1].departure.iataCode} </Text>
         </View>
         <View style={[styles.flexContainer, styles.mb]}>
-          <Text style={styles.time}>08:45AM</Text>
+          <Text style={styles.time}>{moment(item.itineraries[0].segments[0].departure.at).format('MMM Do YYYY, h:mm a')}</Text>
           <View style={[styles.flexContainer]}>
             <MaterialIcons name="timer" size={13} color={AppColor.gray} />
-            <Text style={{fontSize: 11}}>8hours</Text>
+            <Text style={{fontSize: 11}}>{((new Date(item.itineraries[0].segments[1].departure.at) - new Date(item.itineraries[0].segments[0].departure.at))/(1000*60*60)).toFixed(1)}hours</Text>
           </View>
-          <Text style={styles.time}>04:45pm</Text>
+          <Text style={styles.time}>{moment(item.itineraries[0].segments[1].departure.at).format('MMM Do YYYY, h:mm a')}</Text>
         </View>
         <View style={[styles.flexContainer, styles.mb]}>
-          <Text style={styles.flightClass}>Business Class</Text>
+          <Text style={styles.flightClass}>{item.travelerPricings[0].fareDetailsBySegment[0].cabin} CLASS</Text>
           <Text style={styles.layoverText}>Non Stop</Text>
-          <Text style={styles.seatLeft}>16 Seats Left</Text>
+          <Text style={styles.seatLeft}>{item.numberOfBookableSeats} Seats Left</Text>
         </View>
         <Animatable.View
           animation="pulse"
           iterationCount="infinite"
           iterationDelay={500}
           style={styles.btnContainer}>
-          <MyButton value="Book" />
+          <MyButton value="Book" action={bookFlight}/>
         </Animatable.View>
       </View>
     );
@@ -94,12 +95,14 @@ const styles = StyleSheet.create({
   },
   text: {
     color: AppColor.gray,
+    fontWeight:"bold",
+    fontSize:12
   },
   tripContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginVertical: 4,
+    marginVertical: 7,
   },
   planeContainer: {
     flexDirection: 'row',
@@ -134,7 +137,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 6,
     borderRadius: 6,
-    fontSize: 13,
+    fontSize: 11,
   },
   seatLeft: {
     color: AppColor.orange,

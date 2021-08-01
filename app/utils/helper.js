@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, View, StatusBar, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {SafeAreaView, View, StatusBar, StyleSheet, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
@@ -18,9 +18,16 @@ export const MyStatusBar = ({...props}) => (
   </View>
 );
 
+export const BigLoader = () => {
+  return(
+    <View style={styles.loaderContainer}>
+      <ActivityIndicator size="large" color={AppColor.primary}/>
+    </View>
+  )
+}
 export const MyButton = props => {
   return(
-      <TouchableOpacity style={{...styles.body, ...props.body}}>
+      <TouchableOpacity onPress={() => props.action()} style={{...styles.body, ...props.body}}>
           <Text style={{...styles.text, ...props.text}}>{props.value}</Text>
       </TouchableOpacity>
   )
@@ -29,7 +36,7 @@ export const MyButton = props => {
 
 const styles = StyleSheet.create({
   statusBar: {
-    height: STATUSBAR_HEIGHT,
+    height: STATUSBAR_HEIGHT
   },
   body:{
     padding:5,
@@ -41,5 +48,9 @@ const styles = StyleSheet.create({
 text:{
     color:'#fff',
     fontSize:13
+},
+loaderContainer:{
+  height:100,
+  justifyContent:'center'
 }
 });
